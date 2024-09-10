@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import ManagePortfolio from '@/components/rebalance-performance';
 import { useSearchParams } from 'next/navigation';
 
@@ -24,7 +24,7 @@ const mockSmallcases = [
   },
 ];
 
-const Manage = () => {
+const ManageContent = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
 
@@ -38,6 +38,14 @@ const Manage = () => {
 
   return (
     <ManagePortfolio userRole='creator' smallcases={[selectedSmallcase]} />
+  );
+};
+
+const Manage = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ManageContent />
+    </Suspense>
   );
 };
 
